@@ -1,24 +1,37 @@
 const categoryModel = require('../Models/categoryModule')
 
 exports.postCategory = async (req, res) => {
-
-    let category = new categoryModel(req.body)
-    categoryModel.findOne({ category_name: category.category_name }, async (error, data) => {
-        if (data == null) {
-            category = await category.save()
-            if (!category)   return res.status(400).json({ error: 'something went wrong' })
-            res.json({ category })
-        }
-        else
-            return res.status(400).json({ error: 'category name must be unique' })
-    })
-
+    
+    // let category = new categoryModel(req.body)
+    // categoryModel.findOne({ category_name: category.category_name }, async (error, data) => {
+    //     if (data == null) {
+    //         category = await category.save()
+    //         if (!category)   return res.status(400).json({ error: 'something went wrong' })
+    //         res.json({ category })
+    //     }
+    //     else
+    //         return res.status(400).json({ error: 'category name must be unique' })
+    // })
+     try {
+        const {category_name} = req.body
+    const checkCategory = await categoryModel.findOne({ category_name: category_name })
+    if(checkCategory) return res.status(400).json({ error: 'category name must be unique' })
+    const doc = new categoryModel({category_name:category_name})
+    const saveCategory = await doc.save()
+    res.json({ saveCategory })
+     } catch (error) {
+        return res.status(400).json({ error: 'something went wrong' })
+     }
 }
 //  to show all category list
 exports.categoryList = async (req, res) => {
+ try {
     const category = await categoryModel.find()
     if (!category)  return res.status(400).json({ error: 'something went wrong' })
     res.send(category)
+ } catch (error) {
+    return res.status(400).json({ error: 'something went wrong' })
+ }
 }
 
 // to show category details
