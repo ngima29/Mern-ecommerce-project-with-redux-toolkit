@@ -22,9 +22,11 @@ exports.userRegister = async (req, res) => {
        const userdata= await doc.save();
        
        if(!userdata)return res.status(400).json({ error: 'Registration Failed' })
-        const saved_user = await userModel.findOne({ email: email })
+        const saved_user = await userModel.findOne({ email:userdata.email })
         // Generate JWT Token
         const token = generateAuthToken(saved_user) 
+        res.send(token);
+        console.log(token)
     
     const c_url = `${process.env.CLIENT_URL}`
     
@@ -51,6 +53,7 @@ exports.userRegister = async (req, res) => {
 exports.verifiedEmail = async(req,res)=>{
     try {
         const upatedUser = await userModel.updateOne({_id:req.query.id},{$set:{isVerified:true}});
+        console.log("verufinng email")
         if(upatedUser){
             res.redirect('/login');
         }

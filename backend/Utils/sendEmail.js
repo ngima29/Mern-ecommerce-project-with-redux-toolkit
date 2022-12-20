@@ -14,7 +14,7 @@ const sendEmail =  options=>{
         pass: process.env.SMTP_PASS,
       },
     });
-    console.log('createTransport celled')
+ 
     const mailoption={
       from:options.from,
       to:options.to,
@@ -22,9 +22,9 @@ const sendEmail =  options=>{
       text:options.text,
       html:options.html
     }
-    console.log('option fetced')
+ 
      transport.sendMail(mailoption)
-     console.log('email end fron sendemail')
+   
    } catch (error) {
     console.log(error.message)
    }

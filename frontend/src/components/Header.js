@@ -1,7 +1,8 @@
 import React from 'react'
 import{Link, useNavigate} from "react-router-dom"
-
+import { useSelector, useDispatch } from "react-redux";
 const Header = () => {
+  const user = useSelector((state)=>state.user)
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark" >
@@ -28,8 +29,25 @@ const Header = () => {
                 <i className="fa-brands fa-linkedin me-4"></i></Link>
             <Link to="" className="text-white">
                 <i className="fa-brands fa-twitter me-2"></i></Link>
+               
+         
+          </div> 
+          {user._id ?<div>
+        <Link className=" text-white me-4 text-decoration-none"  to="#">
+                    Logout
+          </Link>
+          </div>:<div>
+          <Link className=" text-white me-4 text-decoration-none"  to="#">
+                    Register
+                </Link>
+              
+                <Link className=" text-white me-4 text-decoration-none"  to="#">
+                    Login
+                </Link>
           </div>
+        }
         </div>
+        
       </div>
     </nav>
 
@@ -58,22 +76,15 @@ const Header = () => {
               </li>
             </ul>
             <div className="position-relative">
-              <Link to="" className="text-decoration-none text-dark">
-                <i className="fa-solid fa-magnifying-glass nav-icon"></i>
+              <Link to="" className="text-decoration-none text-dark me-4">
+                <i className="fa-solid fa-magnifying-glass nav-icon "></i>
               </Link>
-              <Link to="" className="text-decoration-none text-dark">
+              <Link to="" className="text-decoration-none text-dark me-4">
                 <i className="fa-solid fa-cart-arrow-down nav-icon"></i>
               </Link>
-              <Link to="" className="text-decoration-none text-dark">
-                <i className="fa-solid fa-user nav-icon"></i>
-              </Link>
             </div>
-            <div className="position-absolute rounded-circle navCart">
-                <span>7</span>
-            </div>
-            <div className="position-absolute rounded-circle navUser">
-                <span>+99</span>
-            </div>
+            
+           
           </div>
         </div>
       </nav>
